@@ -47,13 +47,15 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
     label_class = options[:label_class] || @options[:default_label_class]
     options.delete :label_class
 
+    div_class = options.delete :class
+    classes = ['form-group', div_class].compact
     # This set of toggles will conform to either the stacked or inline style
     options[:style] ||= @options[:default_toggle_style]
     raise "Invalid style passed to toggles: #{options[:style].to_s}. Must be :stacked or :inline" unless [:stacked, :inline].include?(options[:style])
     @toggles_style = options[:style]
 
     # Not necessary, but makes it convenient if we are using the horizontal form style
-    template.content_tag :div, :class => 'form-group' do
+    template.content_tag :div, :class => classes do
       template.concat self.label(nil, label, :class => label_class) if label.present?
 
 			if @options[:layout] == :horizontal
