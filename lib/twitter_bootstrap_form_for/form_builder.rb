@@ -117,6 +117,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
       label    = args.first.nil? ? '' : args.shift
       label_class = options[:label_class] || @options[:default_label_class]
       options.delete :label_class
+      help_text = options.delete :help_text
 
       self.div_wrapper(attribute, :class => 'form-group') do
         template.concat self.label(attribute, label, :class => label_class) if label
@@ -135,6 +136,7 @@ class TwitterBootstrapFormFor::FormBuilder < ActionView::Helpers::FormBuilder
           block.call if block.present? and classes.include?('input-append')
         }
         template.concat error_span(attribute)
+        template.concat template.content_tag(:p, help_text, class: 'help-block') unless help_text.blank?
       end
     end
   end
